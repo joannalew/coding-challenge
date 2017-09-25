@@ -58,17 +58,28 @@ def answer(banana_list):
 
     # pair them up until no valid pairs
     while (res_list):
-        counts = count_list(res_list)
-        mintup = min(counts, key=counts.get)
-        minparts = min(elim_tuples1(res_list, mintup))
-        elim_tuples2(res_list, minparts)
+        print res_list
+        counts = count_list(res_list)               # get the number of pairs each gorilla has
+        mintup = min(counts, key=counts.get)        # key with min value (gorilla with least pairs)
+        minparts = elim_tuples1(res_list, mintup)   # list of gorilla's valid partners
+
+        smallpart = 999999                          # some huge number of connections to compare
+
+        for i in minparts:                          # find the partner with least # of connections
+            if counts[i] < smallpart:
+                smallpart = counts[i]
+                partner = i
+
+        elim_tuples2(res_list, i)                   # eliminate gorilla and partner
+        print res_list
         lsize -= 2
     
     return lsize
 
 
 #banana_list = [1, 1]
-banana_list = [1, 7, 3, 21, 13, 19]
+#banana_list = [1, 7, 3, 21, 13, 19]
+banana_list = [1, 2, 1, 7, 3, 21, 13, 19]
 
 print answer(banana_list)
 
